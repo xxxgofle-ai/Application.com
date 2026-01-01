@@ -1,0 +1,343 @@
+/* ==================== RESET & BASE ==================== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #000;
+  color: #0f0;
+  font-family: 'Courier New', monospace;
+  line-height: 1.6;
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* ==================== GLITTER EFFECT ==================== */
+.glitter {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: -1;
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><circle cx="50" cy="50" r="1" fill="%23fff" opacity="0.7"/></svg>');
+  background-repeat: repeat;
+  animation: sparkle 3s linear infinite;
+  opacity: 0.3;
+}
+
+@keyframes sparkle {
+  0% { transform: translate(0, 0); }
+  100% { transform: translate(100px, 100px); }
+}
+
+/* ==================== HEADER ==================== */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 2rem 5%;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+  backdrop-filter: blur(5px);
+  background-color: rgba(0, 0, 0, 0.5);
+  border-bottom: 1px solid #0f0;
+}
+
+.logo {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #f00;
+  text-shadow: 0 0 10px #f00, 0 0 20px #f00;
+  letter-spacing: 2px;
+}
+
+.nav {
+  display: flex;
+  gap: 2rem;
+}
+
+.nav-link {
+  color: #0f0;
+  text-decoration: none;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  text-shadow: 0 0 5px #0f0;
+}
+
+.nav-link:hover {
+  color: #f00;
+  text-shadow: 0 0 10px #f00, 0 0 20px #f00;
+  transform: scale(1.1);
+}
+
+/* ==================== HERO SECTION ==================== */
+.hero {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 0 2rem;
+  position: relative;
+  color: #0f0;
+}
+
+.glow-text {
+  font-size: 3.5rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+  text-shadow: 0 0 10px #f00, 0 0 20px #f00;
+  transition: all 0.5s ease;
+}
+
+.red {
+  color: #f00;
+  text-shadow: 0 0 10px #f00, 0 0 20px #f00;
+}
+
+.green {
+  color: #0f0;
+  text-shadow: 0 0 10px #0f0, 0 0 20px #0f0;
+}
+
+.subtext {
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+  color: #0f0;
+  text-shadow: 0 0 5px #0f0;
+}
+
+.cta-btn {
+  padding: 12px 30px;
+  font-size: 1rem;
+  background: transparent;
+  border: 1px solid #f00;
+  color: #f00;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-shadow: 0 0 10px #f00;
+  font-family: inherit;
+  outline: none;
+}
+
+.cta-btn:hover {
+  background: #f00;
+  color: #000;
+  transform: scale(1.05);
+  box-shadow: 0 0 20px #f00;
+}
+
+/* ==================== SECTIONS ==================== */
+.section {
+  padding: 6rem 5%;
+  max-width: 1200px;
+  margin: 0 auto;
+  position: relative;
+  opacity: 0;
+  transform: translateY(50px);
+  transition: all 0.8s ease;
+}
+
+.section.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.icon {
+  font-size: 2.5rem;
+  color: #0f0;
+  margin-bottom: 1rem;
+  text-shadow: 0 0 10px #0f0;
+}
+
+h2 {
+  font-size: 2.5rem;
+  margin-bottom: 1.5rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.info {
+  font-size: 1.1rem;
+  margin-bottom: 2rem;
+  color: #0f0;
+  text-shadow: 0 0 5px #0f0;
+}
+
+.status-box {
+  background: rgba(0, 0, 0, 0.6);
+  border: 1px solid #f00;
+  padding: 1rem;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  color: #0f0;
+  text-shadow: 0 0 5px #0f0;
+  display: none;
+}
+
+/* ==================== SKILLS ==================== */
+.skill-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1rem;
+}
+
+.skill-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.progress-bar {
+  height: 8px;
+  background: #111;
+  border: 1px solid #0f0;
+  border-radius: 4px;
+  overflow: hidden;
+  position: relative;
+}
+
+.progress-bar::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 100%;
+  background: #0f0;
+  transition: width 1s ease;
+  animation: loadProgress 1.5s ease forwards;
+}
+
+[data-perc]::before {
+  width: attr(data-perc);
+}
+
+@keyframes loadProgress {
+  from { width: 0; }
+  to { width: 100%; }
+}
+
+/* ==================== PROJECTS ==================== */
+.project-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+}
+
+.project-card {
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid #0f0;
+  border-radius: 10px;
+  overflow: hidden;
+  transition: all 0.4s ease;
+  box-shadow: 0 0 15px rgba(0, 255, 0, 0.2);
+}
+
+.project-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 0 30px rgba(0, 255, 0, 0.4);
+}
+
+.project-card img {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+}
+
+.project-card h3 {
+  margin: 0.5rem;
+  color: #f00;
+  text-shadow: 0 0 5px #f00;
+}
+
+.project-card p {
+  margin: 0.5rem 1rem;
+  font-size: 0.9rem;
+  color: #0f0;
+}
+
+.proj-btn {
+  margin: 1rem;
+  padding: 8px 16px;
+  background: transparent;
+  border: 1px solid #f00;
+  color: #f00;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+}
+
+.proj-btn:hover {
+  background: #f00;
+  color: #000;
+}
+
+/* ==================== CONTACT ==================== */
+.contact-form input,
+.contact-form textarea {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 1rem;
+  background: rgba(0, 0, 0, 0.6);
+  border: 1px solid #0f0;
+  color: #0f0;
+  font-family: inherit;
+  font-size: 1rem;
+  outline: none;
+  text-shadow: 0 0 5px #0f0;
+}
+
+.contact-form button {
+  width: 100%;
+  padding: 12px;
+  background: #f00;
+  color: #000;
+  border: none;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.contact-form button:hover {
+  background: #ff0000cc;
+  transform: scale(1.05);
+}
+
+/* ==================== FOOTER ==================== */
+.footer {
+  text-align: center;
+  padding: 2rem;
+  color: #0f0;
+  font-size: 0.9rem;
+  text-shadow: 0 0 5px #0f0;
+  border-top: 1px solid #0f0;
+}
+
+/* ==================== RESPONSIVE ==================== */
+@media (max-width: 768px) {
+  .header {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .nav {
+    gap: 1rem;
+  }
+
+  .hero {
+    font-size: 1.5rem;
+  }
+
+  .glow-text {
+    font-size: 2.5rem;
+  }
+  }
+  
