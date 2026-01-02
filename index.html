@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Studio | Digital Design | 2026</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    /* ==================== RESET & BASE ==================== */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --bg-primary: #ffffff;
+      --bg-secondary: #f9fafb;
+      --text-primary: #111;
+      --text-secondary: #6b7280;
+      --accent: #FF6B9D;
+      --accent-hover: #ff8ebd;
+      --border: #e5e7eb;
+      --glass-bg: rgba(255, 255, 255, 0.7);
+      --shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+      --transition: all 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
+      --radius: 16px;
+      --gap: 2rem;
+    }
+
+    body.dark-mode {
+      --bg-primary: #111;
+      --bg-secondary: #1a1a1a;
+      --text-primary: #fff;
+      --text-secondary: #a1a1aa;
+      --accent: #8AFFFF;
+      --accent-hover: #aaffff;
+      --border: #333;
+      --glass-bg: rgba(20, 20, 20, 0.6);
+      --shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.6;
+      transition: var(--transition);
+      overflow-x: hidden;
+    }
+
+    /* ==================== GLASSMORPHISM & BACKGROUND ==================== */
+    .glass-card {
+      background: var(--glass-bg);
+      backdrop-filter: blur(10px);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 2rem;
+      transition: var(--transition);
+    }
+
+    .hero {
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 0 2rem;
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(135deg, #f0f4f8, #e0e7ff);
+      color: var(--text-primary);
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><circle cx="50" cy="50" r="1" fill="%23000" opacity="0.05"/></svg>');
+      background-repeat: repeat;
+      opacity: 0.1;
+      z-index: -1;
+    }
+
+    .hero h1 {
+      font-size: 4rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      letter-spacing: -1px;
+      background: linear-gradient(90deg, var(--accent), #8AFFFF);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-shadow: 0 0 10px rgba(255, 107, 157, 0.3);
+    }
+
+    .hero p {
+      font-size: 1.3rem;
+      color: var(--text-secondary);
+      max-width: 600px;
+      margin-bottom: 2rem;
+    }
+
+    .cta-btn {
+      padding: 12px 32px;
+      font-size: 1rem;
+      background: var(--accent);
+      color: white;
+      border: none;
+      border-radius: var(--radius);
+      cursor: pointer;
+      transition: var(--transition);
+      font-weight: 600;
+      box-shadow: 0 5px 15px rgba(255, 107, 157, 0.4);
+    }
+
+    .cta-btn:hover {
+      background: var(--accent-hover);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(255, 107, 157, 0.6);
+    }
+
+    /* ==================== NAVIGATION ==================== */
+    .navbar {
+      position: fixed;
+      top: 2rem;
+      right: 2rem;
+      display: flex;
+      gap: 1rem;
+      z-index: 1000;
+    }
+
+    .nav-toggle {
+      background: var(--glass-bg);
+      border: 1px solid var(--border);
+      border-radius: 50%;
+      width: 48px;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .nav-toggle i {
+      font-size: 1.2rem;
+      color: var(--text-primary);
+    }
+
+    .nav-toggle:hover {
+      transform: scale(1.1);
+    }
+
+    /* ==================== SECTIONS ==================== */
+    section {
+      padding: 6rem 5%;
+      max-width: 1200px;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    section h2 {
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 2rem;
+      text-align: center;
+      color: var(--text-primary);
+    }
+
+    section p {
+      font-size: 1.1rem;
+      color: var(--text-secondary);
+      max-width: 800px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    /* ==================== ABOUT SECTION ==================== */
+    .about {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2rem;
+    }
+
+    .profile-img {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid var(--accent);
+      box-shadow: 0 10px 30px rgba(255, 107, 157, 0.3);
+    }
+
+    .skills-list {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+
+    .skill-tag {
+      background: var(--glass-bg);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 8px 16px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--text-primary);
+      transition: var(--transition);
+    }
+
+    .skill-tag:hover {
+      background: var(--accent);
+      color: white;
+      transform: translateY(-2px);
+    }
+
+    /* ==================== PROJECTS GRID ==================== */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: var(--gap);
+    }
+
+    .project-card {
+      position: relative;
+      overflow: hidden;
+      border-radius: var(--radius);
+      aspect-ratio: 1 / 1;
+      background: var(--bg-secondary);
+      transition: var(--transition);
+      cursor: pointer;
+    }
+
+    .project-card:hover {
+      transform: translateY(-10px) scale(1.03);
+      box-shadow: var(--shadow);
+    }
+
+    .project-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: var(--transition);
+    }
+
+    .project-card:hover img {
+      transform: scale(1.1);
+    }
+
+    .project-info {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      padding: 1.5rem;
+      background: linear-gradient(transparent, rgba(0, 0, 0, 0.7));
+      color: white;
+      opacity: 0;
+      transition: var(--transition);
+    }
+
+    .project-card:hover .project-info {
+      opacity: 1;
+    }
+
+    .project-title {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    .project-category {
+      font-size: 0.9rem;
+      opacity: 0.8;
+    }
+
+    /* ==================== SKILLS BAR ==================== */
+    .skills-bar {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+
+    .skill-item {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .skill-name {
+      font-weight: 500;
+      width: 120px;
+      color: var(--text-primary);
+    }
+
+    .progress-bar {
+      flex: 1;
+      height: 8px;
+      background: var(--border);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: var(--accent);
+      width: 0;
+      transition: width 1.5s ease;
+    }
+
+    /* ==================== TESTIMONIALS ==================== */
+    .testimonials {
+      display: flex;
+      overflow-x: scroll;
+      gap: 2rem;
+      padding: 1rem 0;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+
+    .testimonials::-webkit-scrollbar {
+      display: none;
+    }
+
+    .testimonial-card {
+      min-width: 300px;
+      background: var(--glass-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      box-shadow: var(--shadow);
+    }
+
+    .quote {
+      font-style: italic;
+      font-size: 1.1rem;
+      margin-bottom: 1rem;
+      color: var(--text-primary);
+    }
+
+    .client {
+      font-weight: 600;
+      color: var(--accent);
+    }
+
+    /* ==================== CONTACT ==================== */
+    .contact-form {
+      max-width: 600px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .contact-form input,
+    .contact-form textarea {
+      padding: 12px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: var(--glass-bg);
+      color: var(--text-primary);
+      font-size: 1rem;
+      transition: var(--transition);
+    }
+
+    .contact-form input:focus,
+    .contact-form textarea:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 10px rgba(255, 107, 157, 0.3);
+    }
+
+    .contact-form button {
+      padding: 12px;
+      background: var(--accent);
+      color: white;
+      border: none;
+      border-radius: var(--radius);
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .contact-form button:hover {
+      background: var(--accent-hover);
+      transform: translateY(-2px);
+    }
+
+    /* ==================== SOCIAL & TOGGLE ==================== */
+    .social-icons {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      display: flex;
+      gap: 1rem;
+      z-index: 1000;
+    }
+
+    .social-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: var(--glass-bg);
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-primary);
+      font-size: 1.2rem;
+      transition: var(--transition);
+    }
+
+    .social-icon:hover {
+      background: var(--accent);
+      color: white;
+      transform: translateY(-3px);
+    }
+
+    /* ==================== DARK MODE TOGGLE ==================== */
+    .dark-mode-toggle {
+      position: fixed;
+      top: 2rem;
+      left: 2rem;
+      background: var(--glass-bg);
+      border: 1px solid var(--border);
+      border-radius: 50%;
+      width: 48px;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: var(--transition);
+      z-index: 1000;
+    }
+
+    .dark-mode-toggle i {
+      font-size: 1.2rem;
+      color: var(--text-primary);
+    }
+
+    .dark-mode-toggle:hover {
+      transform: scale(1.1);
+    }
+
+    /* ==================== RESPONSIVE ==================== */
+    @media (max-width: 768px) {
+      .hero h1 {
+        font-size: 3rem;
+      }
+
+      .hero p {
+        font-size: 1.1rem;
+      }
+
+      .projects-grid {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      }
+
+      .navbar {
+        right: 1rem;
+        top: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Dark Mode Toggle -->
+  <div class="dark-mode-toggle" id="darkModeToggle">
+    <i class="fas fa-moon"></i>
+  </div>
+
+  <!-- Navigation -->
+  <div class="navbar">
+    <div class="nav-toggle" id="menuToggle">
+      <i class="fas fa-bars"></i>
+    </div>
+  </div>
+
+  <!-- Social Icons -->
+  <div class="social-icons">
+    <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+    <a href="#" class="social-icon"><i class="fab fa-dribbble"></i></a>
+    <a href="#" class="social-icon"><i class="fab fa-behance"></i></a>
+  </div>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <h1>Design is the language of the future.</h1>
+    <p>Creative Designer & Digital Artist | Based in Tokyo, Japan</p>
+    <button class="cta-btn">View My Work</button>
+  </section>
+
+  <!-- About Section -->
+  <section id="about" class="section about">
+    <img src="profile.jpg" alt="Profile" class="profile-img">
+    <h2>About Me</h2>
+    <p>Saya adalah Stepanus Erdi Sanjaya, lulusan dari Departemen Perencanaan Wilayah dan Kota (DPIB). Saat ini, saya berencana untuk melanjutkan studi di jurusan Teknik Informatika, di mana saya berharap dapat mengembangkan keterampilan di bidang teknologi dan pemrograman. Saya memiliki minat yang besar dalam inovasi digital dan teknologi informasi, serta cita-cita untuk berkontribusi dalam menciptakan solusi teknologi yang bermanfaat bagi masyarakat. Selama di DPIB, saya telah mengembangkan kemampuan analitis dan keahlian dalam perencanaan, yang saya percaya akan sangat berguna di bidang Teknik Informatika.</p>
+    <div class="skills-list">
+      <span class="skill-tag">UI/UX Design</span>
+      <span class="skill-tag">Motion Graphics</span>
+      <span class="skill-tag">Brand Identity</span>
+      <span class="skill-tag">Illustration</span>
+      <span class="skill-tag">Digital Art</span>
+    </div>
+  </section>
+
+  <!-- Projects Section -->
+  <section id="projects" class="section projects">
+    <h2>Featured Projects</h2>
+    <div class="projects-grid">
+      <div class="project-card">
+        <img src="hero1.jpg" alt="Project 1">
+        <div class="project-info">
+          <div class="project-title">Keindahan Alam yang Menginspirasi</div>
+          <div class="project-category">"Setiap detik di alam adalah pengingat bahwa keindahan selalu ada di sekitar kita. Luangkan waktu untuk menikmatinya."</div>
+        </div>
+      </div>
+      <div class="project-card">
+        <img src="hero.jpg" alt="Project 2">
+        <div class="project-info">
+          <div class="project-title">Semangat dan Ketekunan</div>
+          <div class="project-category">Jalan menuju impian tidak selalu mudah, tetapi setiap langkah adalah kemajuan. Teruslah berlari!"</div>
+        </div>
+      </div>
+      <div class="project-card">
+        <img src="hero2.jpg" alt="Project 3">
+        <div class="project-info">
+          <div class="project-title">Kekuatan Persahabatan </div>
+          <div class="project-category">"Bersama teman sejati, setiap tantangan menjadi lebih ringan. Hargai mereka yang selalu ada di sisimu."
+</div>
+        </div>
+      </div>
+      <div class="project-card">
+        <img src="profile.jpg" alt="Project 4">
+        <div class="project-info">
+          <div class="project-title">Pengetahuan adalah Kekuatan </div>
+          <div class="project-category">Setiap buku adalah jendela ke dunia baru. Luangkan waktu untuk belajar dan tumbuh setiap hari."</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Skills Section -->
+  <section id="skills" class="section skills">
+    <h2>Skills & Tools</h2>
+    <div class="skills-bar">
+      <div class="skill-item">
+        <span class="skill-name">Figma</span>
+        <div class="progress-bar">
+          <div class="progress-fill" style="width: 95%;"></div>
+        </div>
+      </div>
+      <div class="skill-item">
+        <span class="skill-name">Adobe XD</span>
+        <div class="progress-bar">
+          <div class="progress-fill" style="width: 90%;"></div>
+        </div>
+      </div>
+      <div class="skill-item">
+        <span class="skill-name">After Effects</span>
+        <div class="progress-bar">
+          <div class="progress-fill" style="width: 88%;"></div>
+        </div>
+      </div>
+      <div class="skill-item">
+        <span class="skill-name">Illustrator</span>
+        <div class="progress-bar">
+          <div class="progress-fill" style="width: 92%;"></div>
+        </div>
+      </div>
+      <div class="skill-item">
+        <span class="skill-name">Photoshop</span>
+        <div class="progress-bar">
+          <div class="progress-fill" style="width: 85%;"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials -->
+  <section id="testimonials" class="section testimonials">
+    <div class="testimonial-card">
+      <p class="quote">“Her designs don’t just look good—they feel alive.”</p>
+      <p class="client">— Client, TechFlow Inc.</p>
+    </div>
+    <div class="testimonial-card">
+      <p class="quote">“A rare blend of precision and soul.”</p>
+      <p class="client">— Creative Director, PixelLab</p>
+    </div>
+    <div class="testimonial-card">
+      <p class="quote">“Every project tells a story.”</p>
+      <p class="client">— Editor, Design Weekly</p>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section id="contact" class="section contact">
+    <h2>Let’s Create Together</h2>
+    <form class="contact-form">
+      <input type="text" placeholder="Your Name" required>
+      <input type="email" placeholder="your email" required>
+      <textarea placeholder="Tell me about your project..." rows="5"></textarea>
+      <button type="submit">Send Message</button>
+    </form>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <p>&copy; 2026 Studio | Digital Design. All rights reserved.</p>
+  </footer>
+
+  <!-- Script -->
+  <script>
+    // Dark Mode Toggle
+    const darkModeToggle = document.getElementById("darkModeToggle");
+    const body = document.body;
+
+    darkModeToggle.addEventListener("click", () => {
+      body.classList.toggle("dark-mode");
+      const icon = darkModeToggle.querySelector("i");
+      if (body.classList.contains("dark-mode")) {
+        icon.className = "fas fa-sun";
+      } else {
+        icon.className = "fas fa-moon";
+      }
+    });
+
+    // Auto-dark mode based on time
+    const hour = new Date().getHours();
+    if (hour >= 18 || hour < 6) {
+      body.classList.add("dark-mode");
+      darkModeToggle.querySelector("i").className = "fas fa-sun";
+    }
+
+    // Smooth Scroll
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+          behavior: 'smooth'
+        });
+      });
+    });
+
+    // Progress Bar Animation on Scroll
+    const progressBars = document.querySelectorAll('.progress-fill');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const width = entry.target.style.width;
+          entry.target.style.width = '0';
+          setTimeout(() => {
+            entry.target.style.width = width;
+          }, 100);
+        }
+      });
+    }, { threshold: 0.1 });
+
+    progressBars.forEach(bar => observer.observe(bar));
+
+    // Project Hover Effect (Optional: 3D Flip)
+    document.querySelectorAll('.project-card').forEach(card => {
+      card.addEventListener('mouseenter', () => {
+        card.style.transform = 'perspective(1000px) rotateX(5deg)';
+      });
+      card.addEventListener('mouseleave', () => {
+        card.style.transform = 'perspective(1000px) rotateX(0)';
+      });
+    });
+  </script>
+
+</body>
+</html>
